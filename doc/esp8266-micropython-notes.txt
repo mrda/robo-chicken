@@ -1,0 +1,25 @@
+Connect to the REPL:
+screen /dev/tty.SLAB_USBtoUART 115200
+
+Installation things:
+pip install esptool
+pip install adafruit-ampy
+
+esptool.py --port /dev/tty.SLAB_USBtoUART erase_flash
+esptool.py --port /dev/tty.SLAB_USBtoUART --baud 115200 write_flash --flash_size=8m 0 esp8266-20160909-v1.8.4.bin
+
+Ampy commands:
+ampy --port /dev/tty.SLAB_USBtoUART ls
+ampy --port /dev/tty.SLAB_USBtoUART get boot.py  > boot.py
+ampy --port /dev/tty.SLAB_USBtoUART put test.py main.py
+ampy --port /dev/tty.SLAB_USBtoUART reset
+ampy --port /dev/tty.SLAB_USBtoUART rm main.py
+
+# Connect to wifi on the esp8266
+See https://learn.adafruit.com/micropython-basics-esp8266-webrepl/overview?view=all
+import network
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect('ssid', 'password')
+wlan.ifconfig()
+

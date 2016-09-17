@@ -15,6 +15,7 @@ maxH = root.winfo_screenheight()
 x = 0
 y = 0
 
+DELAY = 250 # microseconds
 HOST = "192.168.0.127"
 PORT = 8080
 
@@ -51,8 +52,8 @@ def timer_event():
     global root
     print format_data(x, y)
     send_data(HOST, PORT, format_data(x, y))
-    root.after(1000, timer_event)
-root.after(1000, timer_event)
+    root.after(DELAY, timer_event)
+root.after(DELAY, timer_event)
 
 def format_data(x, y):
     return "PUT /mouse/%d/%d" % (x, y)
