@@ -2,6 +2,8 @@ import usocket as socket
 import machine
 import network
 
+DEBUG = False
+
 class WebServer:
 
     def __init__(self):
@@ -55,18 +57,19 @@ Content-Type: text/html
                 action = req[1]
                 remaining = req[2]
 
-                print ("\nNew request:")
-                print ("  verb: ", verb)
-                print ("  action: ", action)
-                print ("  remaining: ", remaining)
+                if DEBUG:
+                    print ("\nNew request:")
+                    print ("  verb: ", verb)
+                    print ("  action: ", action)
+                    print ("  data: ", remaining)
 
-                # dirty trick to quit the webserver
+                # Dirty trick to quit the webserver
                 if req == '/quit':
                     conn.sendall(self.message(err=200, s="OK", txt="Bye"))
                     break
                 try:
-                    thing = self.handle_url(verb, action, remaining)
-                    conn.sendall(self.message(err=200, s="OK", txt=thing))
+                    result = self.handle_url(verb, action, remaining)
+                    conn.sendall(self.message(err=200, s="OK", txt=result))
                 except KeyError:
                     conn.sendall(self.message(err=404, s="Not Found"))
                     print('Unsupported URL: \"%s\"' % req)
