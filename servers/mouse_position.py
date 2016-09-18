@@ -14,14 +14,19 @@ maxW = root.winfo_screenwidth()
 maxH = root.winfo_screenheight()
 x = 0
 y = 0
+sent_x = -1
+sent_y = -1
 
-DELAY = 250 # microseconds
+DELAY = 100 # microseconds
 HOST = "192.168.0.127"
 PORT = 8080
+
+DEBUG = True
 
 root.geometry("{0}x{1}+0+0".format(maxW, maxH))
 
 print("Screen size is: width=%s height=%s" % (maxW, maxH))
+print("Hit <ESC> to exit...")
 
 # Bind the left-mouse button
 #def button_click_event(event):
@@ -48,10 +53,15 @@ def mouse_move_event(event):
 root.bind("<Motion>", mouse_move_event)
 
 def timer_event():
-    global x, y
+    global x, y, sent_x, sent_y
     global root
-    print format_data(x, y)
-    send_data(HOST, PORT, format_data(x, y))
+    # Only send coords if x or y change
+    if (x != sent_x) or (y != sent_y):
+        if DEBUG:
+            print format_data(x, y)
+        send_data(HOST, PORT, format_data(x, y))
+        sent_x = x
+        sent_y = y
     root.after(DELAY, timer_event)
 root.after(DELAY, timer_event)
 
