@@ -3,8 +3,11 @@ import time
 
 class Eye:
 
-    def __init__(self):
-        self.d = matrix8x8.Matrix8x8()
+    def __init__(self, addr=None):
+        if addr is None:
+            self.d = matrix8x8.Matrix8x8()
+        else:
+            self.d = matrix8x8.Matrix8x8(addr=addr)
         self.empty = [0] * 8
         self.empty[0]  = int("00000000", 2)
         self.empty[1]  = int("00000000", 2)

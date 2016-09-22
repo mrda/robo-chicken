@@ -14,18 +14,19 @@ MAX_HEIGHT = 800
 class PyEye:
 
     def __init__(self):
-        self.e = eyes.Eye()
+        self.left_eye = eyes.Eye(addr=0x71)
+        self.right_eye = eyes.Eye()
 
         self.eye_position = [[-1 for x in range(3)] for y in range(3)]
-        self.eye_position[LEFT][UP] = self.e.eye_left_up
-        self.eye_position[LEFT][CENTRE] = self.e.eye_left_centre
-        self.eye_position[LEFT][DOWN] = self.e.eye_left_down
-        self.eye_position[CENTRE][UP] = self.e.eye_centre_up
-        self.eye_position[CENTRE][CENTRE] = self.e.eye_centre_centre
-        self.eye_position[CENTRE][DOWN] = self.e.eye_centre_down
-        self.eye_position[RIGHT][UP] = self.e.eye_right_up
-        self.eye_position[RIGHT][CENTRE] = self.e.eye_right_centre
-        self.eye_position[RIGHT][DOWN] = self.e.eye_right_down
+        self.eye_position[LEFT][UP] = (self.left_eye.eye_left_up, self.right_eye.eye_right_down)
+        self.eye_position[LEFT][CENTRE] = (self.left_eye.eye_left_centre, self.right_eye.eye_right_centre)
+        self.eye_position[LEFT][DOWN] = (self.left_eye.eye_left_down, self.right_eye.eye_right_up)
+        self.eye_position[CENTRE][UP] = (self.left_eye.eye_centre_up, self.right_eye.eye_centre_down)
+        self.eye_position[CENTRE][CENTRE] = (self.left_eye.eye_centre_centre, self.right_eye.eye_centre_centre)
+        self.eye_position[CENTRE][DOWN] = (self.left_eye.eye_centre_down, self.right_eye.eye_centre_up)
+        self.eye_position[RIGHT][UP] = (self.left_eye.eye_right_up, self.right_eye.eye_left_down)
+        self.eye_position[RIGHT][CENTRE] = (self.left_eye.eye_right_centre, self.right_eye.eye_left_centre)
+        self.eye_position[RIGHT][DOWN] = (self.left_eye.eye_right_down, self.right_eye.eye_left_up)
 
     def choose_eye(self, x, y):
         x = int(x)
@@ -48,7 +49,8 @@ class PyEye:
         else:
             height = DOWN
 
-        self.eye_position[width][height]()
+        self.eye_position[width][height][0]()
+        self.eye_position[width][height][1]()
 
 
     def manage_cursor(self, data):
