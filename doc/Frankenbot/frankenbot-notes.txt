@@ -4,3 +4,4 @@ The motor drive circuit is over here - https://learn.adafruit.com/adafruit-ardui
 
 There's a Frankenbot-0.1.fzz file, which is a schematic of what was built, along with photos showing the actual build.
 
+And there's a couple of videos to see: https://t.co/9DOaJtEQXo and https://t.co/3I2LFPyVzN
