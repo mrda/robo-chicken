@@ -48,16 +48,16 @@ class RoboDrive:
 
     def turn_left(self):
         # TODO(mrda): Use the optical encoders, rather than guessing
-        self.pca.duty(LEFT, SPEED_OFF)
-        self.pca.duty(RIGHT, SPEED_FAST)
+        self.pca.duty(RIGHT, SPEED_OFF)
+        self.pca.duty(LEFT, SPEED_FAST)
         time.sleep(TURN_TIME)
         self.pca.duty(LEFT, SPEED_OFF)
         self.pca.duty(RIGHT, SPEED_OFF)
 
     def turn_right(self):
         # TODO(mrda): Use the optical encoders, rather than guessing
-        self.pca.duty(RIGHT, SPEED_OFF)
-        self.pca.duty(LEFT, SPEED_FAST)
+        self.pca.duty(LEFT, SPEED_OFF)
+        self.pca.duty(RIGHT, SPEED_FAST)
         time.sleep(TURN_TIME)
         self.pca.duty(LEFT, SPEED_OFF)
         self.pca.duty(RIGHT, SPEED_OFF)
