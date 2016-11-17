@@ -1,7 +1,6 @@
 #
-# Test circuit to drive Frakenbot in a pseudo-racetrack
-# Making use of a ESP8266 Huzzah running micropython and using
-# https://www.adafruit.com/products/2928
+# Drive Frankenbot using a ESP8266 Huzzah running micropython and a
+# 8 channel PWM controller (https://www.adafruit.com/products/2928)
 #
 # See https://github.com/adafruit/micropython-adafruit-pca9685 and
 # https://learn.adafruit.com/adafruit-arduino-lesson-13-dc-motors/...
@@ -10,7 +9,6 @@
 import machine
 import pca9685
 import time
-
 
 # Channel defs
 LEFT = 3
@@ -22,7 +20,7 @@ SPEED_SLOW = 1024
 SPEED_RUN = 2048
 SPEED_FAST = 4095  # Maximum
 
-TURN_TIME = 1
+TURN_TIME = 1.0
 
 
 class RoboDrive:
@@ -36,10 +34,11 @@ class RoboDrive:
         self.pca.freq(freq)
 
     def step(self, secs=None, speed=None):
+        # TODO(mrda): Should be distance based, not time based
         if speed is None:
             speed = SPEED_FAST
         if secs is None:
-            secs = 2
+            secs = 2.0
         self.pca.duty(LEFT, speed)
         self.pca.duty(RIGHT, speed)
         time.sleep(secs)
