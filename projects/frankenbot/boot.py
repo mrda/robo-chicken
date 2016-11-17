@@ -7,7 +7,4 @@ webrepl.start()
 gc.collect()
 
 # Frankenbot!
-import time
-time.sleep(10)
 import frankenbot
-

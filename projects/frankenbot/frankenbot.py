@@ -1,6 +1,11 @@
 #
 # frankenbot - REST api controlled cardboard robot
 #
+# Here's some usage:
+#
+# curl -i -X PUT http://192.168.0.128:8080/turn/left
+# curl -i -X PUT http://192.168.0.128:8080/turn/right
+# curl -i -X PUT http://192.168.0.128:8080/move/10
 
 import drive
 import ws
@@ -12,8 +17,8 @@ class Frankenbot:
         self.r = drive.RoboDrive()
 
     def move(self, data):
-        self.r.step()
-        return "Moving 1"
+        self.r.step(secs=int(data))
+        return "Moving %s" % data
 
     def turn(self, data):
         if data.lower() == "left":
