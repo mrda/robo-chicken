@@ -1,7 +1,14 @@
 
+# See http://wiki.micropython.org/Play-Tone for inspiration
+
+# See https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/pinouts
+# for Huzzah ESP8266 pinouts
+
 from machine import Pin, PWM
 import time
-tempo = 5
+
+PIEZO_PIN = 14
+TEMPO = 5
 
 tones = {
     'B0': 31,
@@ -83,9 +90,9 @@ def play_mockingjay():
 
 def _play_song(notes, rhythm):
     try:
-        beeper = PWM(Pin(14, Pin.OUT), freq=440, duty=512)
+        beeper = PWM(Pin(PIEZO_PIN, Pin.OUT), freq=440, duty=512)
         for tone, length in zip(notes, rhythm):
             beeper.freq(tones[tone.upper()])
-            time.sleep(tempo/length)
+            time.sleep(TEMPO/length)
     finally:
         beeper.deinit()
