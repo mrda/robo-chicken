@@ -13,7 +13,7 @@ import ws
 
 class Frankenbot:
     MOVE = True
-    SOUND = False
+    SOUND = True
     EYES = True
 
     def __init__(self):
@@ -26,6 +26,10 @@ class Frankenbot:
         if Frankenbot.EYES:
             import frankeneyes
 
+        print ("Sound: ", Frankenbot.SOUND)
+        print ("Move: ", Frankenbot.MOVE)
+        print ("Eyes: ", Frankenbot.EYES)
+
         # Note(mrda): The 8 Channel PWM featherwing board
         # (https://www.adafruit.com/products/2928) uses I2C 0x70
         # as a broadcast address, so I need to change the addresses
@@ -37,6 +41,8 @@ class Frankenbot:
             self.r = drive.RoboDrive()
         if Frankenbot.EYES:
             self.eyes = frankeneyes.FrankenEyes()
+        if Frankenbot.SOUND:
+            self.beep = beep.Beep()
 
     def move(self, data):
         if Frankenbot.EYES:
@@ -72,22 +78,20 @@ class Frankenbot:
         return s
 
     def do_beep(self, data):
-        if Frankenbot.SOUND:
-            beep.play_notes(data)
+        self.beep.play_notes(data)
         return "I like music!"
 
     def do_mockingjay(self, data):
-        if Frankenbot.SOUND:
-            beep.play_mockingjay(data)
+        self.beep.play_mockingjay(data)
         return "Go Katniss!"
 
-
-w = ws.WebServer()
-f = Frankenbot()
-w.register_url("GET", "status", f.status)
-w.register_url("PUT", "turn", f.turn)
-w.register_url("PUT", "move", f.move)
-w.register_url("PUT", "beep", f.do_beep)
-w.register_url("PUT", "mockingjay", f.do_mockingjay)
-
-w.start()
+    def start(self):
+        w = ws.WebServer()
+        w.register_url("GET", "status", self.status)
+        if Frankenbot.MOVE:
+            w.register_url("PUT", "turn", self.turn)
+            w.register_url("PUT", "move", self.move)
+        if Frankenbot.SOUND:
+            w.register_url("PUT", "beep", self.do_beep)
+            w.register_url("PUT", "mockingjay", self.do_mockingjay)
+        w.start()

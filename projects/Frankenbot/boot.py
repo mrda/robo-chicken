@@ -8,3 +8,4 @@ gc.collect()
 
 # Frankenbot!
 import frankenbot
+frankenbot.Frankenbot().start()
