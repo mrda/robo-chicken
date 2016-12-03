@@ -7,7 +7,7 @@
 from machine import Pin, PWM
 import time
 
-class Beep():
+class Beep:
 
     PIEZO_PIN = 14
     TEMPO = 5
@@ -83,7 +83,7 @@ class Beep():
         self._play_song(n, r)
 
 
-    def play_mockingjay(self, dummy):
+    def play_mockingjay(self, foo):
         notes = ['G5', 'AS5', 'A5', 'D5']
         rhythm = [8, 8, 8, 8]
         self._play_song(notes, rhythm)
@@ -91,9 +91,9 @@ class Beep():
 
     def _play_song(self, notes, rhythm):
         try:
-            beeper = PWM(Pin(PIEZO_PIN, Pin.OUT), freq=440, duty=512)
+            beeper = PWM(Pin(Beep.PIEZO_PIN, Pin.OUT), freq=440, duty=512)
             for tone, length in zip(notes, rhythm):
                 beeper.freq(Beep.TONES[tone.upper()])
-                time.sleep(TEMPO/length)
+                time.sleep(Beep.TEMPO/length)
         finally:
             beeper.deinit()

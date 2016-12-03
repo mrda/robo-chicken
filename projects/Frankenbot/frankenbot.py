@@ -42,7 +42,7 @@ class Frankenbot:
         if Frankenbot.EYES:
             self.eyes = frankeneyes.FrankenEyes()
         if Frankenbot.SOUND:
-            self.beep = beep.Beep()
+            self.b = beep.Beep()
 
     def move(self, data):
         if Frankenbot.EYES:
@@ -78,11 +78,11 @@ class Frankenbot:
         return s
 
     def do_beep(self, data):
-        self.beep.play_notes(data)
+        self.b.play_notes(data)
         return "I like music!"
 
     def do_mockingjay(self, data):
-        self.beep.play_mockingjay(data)
+        self.b.play_mockingjay(data)
         return "Go Katniss!"
 
     def start(self):
@@ -91,7 +91,6 @@ class Frankenbot:
         if Frankenbot.MOVE:
             w.register_url("PUT", "turn", self.turn)
             w.register_url("PUT", "move", self.move)
-        if Frankenbot.SOUND:
-            w.register_url("PUT", "beep", self.do_beep)
-            w.register_url("PUT", "mockingjay", self.do_mockingjay)
+        w.register_url("PUT", "sound", self.do_beep)
+        w.register_url("PUT", "mockingjay", self.do_mockingjay)
         w.start()
