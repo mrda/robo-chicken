@@ -81,8 +81,7 @@ def play_notes(notes):
     _play_song(n, r)
 
 
-def play_mockingjay():
-    # Mockingjay
+def play_mockingjay(dummy):
     notes = ['G5', 'AS5', 'A5', 'D5']
     rhythm = [8, 8, 8, 8]
     _play_song(notes, rhythm)
